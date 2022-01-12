@@ -1,0 +1,122 @@
+<html>
+  <head>
+    <title>TouchPad</title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+      #myElement {
+        background: black;
+        width: 100%;
+        height: 100%;
+        color: white;
+      }
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="myScroll">
+      <div id="myElement">
+      </div>
+    </div>
+
+    <script src="/hammerjs/hammer.js"></script>
+    <script src="/socket.io/socket.io.min.js"></script>
+    <script src="/socket.io.msgpack.min.js"></script>
+    <script>
+      var myElement = document.getElementById('myElement')
+      const { clientWidth, clientHeight } = myElement
+      const socket = io({
+        'transports': ['websocket'],
+        allowUpgrades: false,
+        query: { clientWidth, clientHeight }
+      })
+
+      socket.on('connect', () => {
+        console.debug('connect to server')
+      }).on('disconnect', (reason) => {
+        console.debug('client disconnect', reason)
+        if (reason === "io server disconnect") {
+          // the disconnection was initiated by the server, you need to reconnect manually
+          socket.connect()
+        }
+      }).on('connect_error', (err) => {
+        console.error('client connect_error', err)
+      })
+
+      var mc = new Hammer.Manager(myElement)
+
+      mc.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }))
+      mc.add(new Hammer.Tap({ event: 'tap' }))
+      mc.add(new Hammer.Tap({ event: 'righttap', pointers: 2 }))
+      mc.get('righttap').recognizeWith('tap')
+      mc.add(new Hammer.Press({}))
+
+      var norm = (xy, wh) => {
+        if (xy < 0) {
+          return 0
+        } else if (xy > wh) {
+          return wh
+        } else {
+          return xy
+        }
+      }
+
+      const startAt = { x: 0, y: 0 }
+
+      mc.on('panstart', (e) => {
+        e.preventDefault()
+        startAt.x = e.center.x
+        startAt.y = e.center.y
+        socket.emit('panstart')
+      }).on('panmove', (e) => {
+        e.preventDefault()
+        var { x, y } = e.center
+        x = norm(x, clientWidth) - startAt.x
+        y = norm(y, clientHeight) - startAt.y
+        const buffer = new ArrayBuffer(4)
+        const dataView = new DataView(buffer)
+        dataView.setInt16(0, x, true)
+        dataView.setInt16(2, y, true)
+        socket.emit('panmove', buffer)
+      }).on('panend', (e) => {
+        e.preventDefault()
+        startAt.x = 0
+        startAt.y = 0
+        socket.emit('panend')
+      }).on('tap', (e) => {
+        e.preventDefault()
+        console.debug('tap')
+        socket.emit('tap')
+      }).on('righttap', (e) => {
+        e.preventDefault()
+        console.debug('righttap')
+        socket.emit('righttap')
+      }).on('press', (e) => {
+        e.preventDefault()
+        socket.emit('press')
+      }).on('pressup', (e) => {
+        e.preventDefault()
+        socket.emit('pressup')
+      })
+
+      var myScroll = document.getElementById('myScroll')
+      var mc2 = new Hammer.Manager(myScroll)
+      mc2.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, pointers: 2 }))
+
+      mc2.on('panleft', (e) => {
+        e.preventDefault()
+        socket.emit('panleft')
+      }).on('panright', (e) => {
+        e.preventDefault()
+        socket.emit('panright')
+      }).on('panup', (e) => {
+        e.preventDefault()
+        socket.emit('panup')
+      }).on('pandown', (e) => {
+        e.preventDefault()
+        socket.emit('pandown')
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "mobile-touchpad",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "huoyijie",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "hammerjs": "^2.0.8",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-views": "^8.0.0",
+    "robotjs": "^0.6.0",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
+    "socket.io-msgpack-parser": "^3.0.1",
+    "swig": "^1.4.2"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.6",
+    "utf-8-validate": "^5.0.8"
+  }
+}
