@@ -187,4 +187,7 @@ getScreenSize(): 获取屏幕分辨率 (width * height)
 在进行 socket.io 通信时可以参照[官方文档](https://socket.io/docs/v4/performance-tuning/)进行性能优化，实现最佳通信性能。同时每次通信时，只传输必要的数据，减少冗余数据，数据经过二进制序列化等都可以帮助减少数据包大小，减少数据包时延，提升操控体验。
 
 # 作者 huoyijie (https://huoyijie.cn)
+
+本篇文章地址[https://huoyijie.cn/article/66505700774611ec879e8d76a45d5319/](https://huoyijie.cn/article/66505700774611ec879e8d76a45d5319/)
+
 [作者更多文章](https://huoyijie.cn)
