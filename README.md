@@ -186,6 +186,38 @@ getScreenSize(): 获取屏幕分辨率 (width * height)
 
 在进行 socket.io 通信时可以参照[官方文档](https://socket.io/docs/v4/performance-tuning/)进行性能优化，实现最佳通信性能。同时每次通信时，只传输必要的数据，减少冗余数据，数据经过二进制序列化等都可以帮助减少数据包大小，减少数据包时延，提升操控体验。
 
+
+# 安装
+
+1. 检查安装环境，下面是笔者的安装环境，高于此版本应该都是可以的。
+```
+$ node -v
+v14.16.0
+
+$ npm -v
+6.14.13
+```
+
+2. 克隆代码
+```
+git clone https://github.com/huoyijie/mobile-touchpad.git
+```
+
+3. 安装依赖
+```
+npm i
+```
+
+4. 运行服务端
+```
+npm start
+```
+
+5. 打开手机浏览器，访问 http://ip:3000，其中 ip 为电脑 ip 地址
+
+等待页面加载完成后，就可以通过手机触控操作电脑了。
+
+
 # 作者 huoyijie (https://huoyijie.cn)
 
 文章地址 [https://huoyijie.cn/article/66505700774611ec879e8d76a45d5319/](https://huoyijie.cn/article/66505700774611ec879e8d76a45d5319/)
