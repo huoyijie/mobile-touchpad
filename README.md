@@ -188,6 +188,6 @@ getScreenSize(): 获取屏幕分辨率 (width * height)
 
 # 作者 huoyijie (https://huoyijie.cn)
 
-本篇文章地址[https://huoyijie.cn/article/66505700774611ec879e8d76a45d5319/](https://huoyijie.cn/article/66505700774611ec879e8d76a45d5319/)
+文章地址 [https://huoyijie.cn/article/66505700774611ec879e8d76a45d5319/](https://huoyijie.cn/article/66505700774611ec879e8d76a45d5319/)
 
-[作者更多文章](https://huoyijie.cn)
+作者 [更多文章](https://huoyijie.cn)
