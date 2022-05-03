@@ -1,5 +1,5 @@
 # mobile-touchpad
-turn your phone into a touchpad
+turn your phone into a touchpad :blush:
 
 # License
 MIT License
